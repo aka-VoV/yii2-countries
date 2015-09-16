@@ -1,0 +1,22 @@
+{
+    "name": "akavov/yii2-countries",
+    "description": "ISO 3166-1 numeric code, ISO 3166-1 alpha-2 code, ITU-T calling code and name (English, Russian and Ukrainian) for all the countries in the world with their flags",
+    "type": "yii2-extension",
+    "keywords": ["yii2","extension"," behavior"," country"," ISO 3166-1 numeric code"," ISO 3166-1 alpha-2 code"," ITU-T calling code and name"," flags"],
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "akaVoV",
+            "email": "vlvladimirvl@gmail.com"
+        }
+    ],
+    "require": {
+        "yiisoft/yii2": "*",
+        "bower-asset/flag-icon-css": "*"
+    },
+    "autoload": {
+        "psr-4": {
+            "akavov\\countries\\": ""
+        }
+    }
+}
