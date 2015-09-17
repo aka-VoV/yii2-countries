@@ -12,6 +12,7 @@
     ],
     "require": {
         "yiisoft/yii2": "*",
+        "2amigos/yii2-selectize-widget": "~1.0",
         "bower-asset/flag-icon-css": "*"
     },
     "autoload": {
