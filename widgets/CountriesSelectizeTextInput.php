@@ -14,10 +14,19 @@ use yii\web\JsExpression;
 class CountriesSelectizeTextInput extends SelectizeTextInput
 {
 
+
     /**
      * @var array
      */
     public $customRender;
+    /**
+     * @var array
+     */
+    private $patterns = array('/{/', '/}/');
+    /**
+     * @var array
+     */
+    private $replacement = array('\'+', '+\'');
     /**
      * @inheritdoc
      */
@@ -36,7 +45,8 @@ class CountriesSelectizeTextInput extends SelectizeTextInput
         if ($this->customRender !== null && !empty($this->customRender)) {
 
             foreach($this->customRender as $template => $templateValue){
-                $this->clientOptions['render'][$template] = new JsExpression("function(item, escape_html){return $templateValue;}");
+                $templateValue = preg_replace($this->patterns, $this->replacement, $templateValue);
+                $this->clientOptions['render'][$template] = new JsExpression("function(item, escape_html){return '$templateValue';}");
             }
 
         }
