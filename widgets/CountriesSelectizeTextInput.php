@@ -9,7 +9,11 @@
 namespace akavov\countries\widgets;
 use dosamigos\selectize\SelectizeTextInput;
 use akavov\countries\assets\CountriesAsset;
+use yii\helpers\Json;
 use yii\web\JsExpression;
+use Yii;
+use yii\web\Response;
+use ict\posts\common\models\Country;
 
 class CountriesSelectizeTextInput extends SelectizeTextInput
 {
@@ -48,10 +52,24 @@ class CountriesSelectizeTextInput extends SelectizeTextInput
                 $templateValue = preg_replace($this->patterns, $this->replacement, $templateValue);
                 $this->clientOptions['render'][$template] = new JsExpression("function(item, escape_html){return '$templateValue';}");
             }
-
         }
+        $this->clientOptions['options'] = new JsExpression($this->getAllCountries());
+        parent::registerClientScript();
+    }
 
-       parent::registerClientScript();
+    /**
+     * Return matched countries
+     * @param  string $query
+     * @return json result array
+     */
+    public function getAllCountries($query = null)
+    {
+        $list = Country::find()
+            //->where(['like','name_en', $query])
+            //->orWhere(['like','name_uk', $query])
+            //->orWhere(['like','name_ru', $query])
+            ->all();
+        return Json::encode($list);
     }
 
 }

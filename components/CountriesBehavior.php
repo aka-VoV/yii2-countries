@@ -12,7 +12,7 @@ class CountriesBehavior extends Behavior
     /**
      * @var boolean whether to return tags as array instead of string
      */
-    public $countryValuesAsArray = false;
+    public $countryValuesAsArray = true;
     /**
      * @var string the countries relation name
      */
