@@ -12,13 +12,14 @@ use akavov\countries\assets\CountriesAsset;
 use yii\helpers\Json;
 use yii\web\JsExpression;
 use Yii;
-use yii\web\Response;
-use ict\posts\common\models\Country;
+//use ict\posts\common\models\Country;
 
 class CountriesSelectizeTextInput extends SelectizeTextInput
 {
-
-
+    /**
+     * @var string
+     */
+    public $countryModelNamespace = 'ict\posts\common\models\Country';
     /**
      * @var array
      */
@@ -45,12 +46,11 @@ class CountriesSelectizeTextInput extends SelectizeTextInput
      */
     public function registerClientScript()
     {
-
         if ($this->customRender !== null && !empty($this->customRender)) {
 
             foreach($this->customRender as $template => $templateValue){
                 $templateValue = preg_replace($this->patterns, $this->replacement, $templateValue);
-                $this->clientOptions['render'][$template] = new JsExpression("function(item, escape_html){return '$templateValue';}");
+                $this->clientOptions['render'][$template] = new JsExpression("function(item, escape){return '$templateValue';}");
             }
         }
         $this->clientOptions['options'] = new JsExpression($this->getAllCountries());
@@ -58,17 +58,14 @@ class CountriesSelectizeTextInput extends SelectizeTextInput
     }
 
     /**
-     * Return matched countries
-     * @param  string $query
+     * Return all countries
      * @return json result array
      */
-    public function getAllCountries($query = null)
+    public function getAllCountries()
     {
-        $list = Country::find()
-            //->where(['like','name_en', $query])
-            //->orWhere(['like','name_uk', $query])
-            //->orWhere(['like','name_ru', $query])
-            ->all();
+        $modelClass = $this->countryModelNamespace;
+        $list = $modelClass::find()
+                ->all();
         return Json::encode($list);
     }
 
