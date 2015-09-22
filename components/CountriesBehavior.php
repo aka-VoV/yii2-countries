@@ -4,13 +4,11 @@ namespace akavov\countries\components;
 
 use yii\base\Behavior;
 use yii\db\ActiveRecord;
-use yii\db\Query;
-
 
 class CountriesBehavior extends Behavior
 {
     /**
-     * @var boolean whether to return tags as array instead of string
+     * @var boolean whether to return countries as array instead of string
      */
     public $countryValuesAsArray = true;
     /**
@@ -40,9 +38,8 @@ class CountriesBehavior extends Behavior
             ActiveRecord::EVENT_BEFORE_DELETE   => 'beforeDelete',
         ];
     }
-
     /**
-     * Returns tags.
+     * Returns countries.
      * @param boolean|null $asArray
      * @return string|string[]
      */
@@ -67,44 +64,39 @@ class CountriesBehavior extends Behavior
             return $this->_countryValues === null ? '' : implode(', ', $this->_countryValues);
         }
     }
-
     /**
-     * Sets tags.
+     * Sets countries.
      * @param string|string[] $values
      */
     public function setCountryValues($values)
     {
         $this->_countryValues = $this->filterCountryValues($values);
     }
-
     /**
-     * Adds tags.
+     * Adds countries.
      * @param string|string[] $values
      */
     public function addCountryValues($values)
     {
         $this->_countryValues = array_unique(array_merge($this->getCountryValues(true), $this->filterCountryValues($values)));
     }
-
     /**
-     * Removes tags.
+     * Removes countries.
      * @param string|string[] $values
      */
     public function removeCountryValues($values)
     {
         $this->_countryValues = array_diff($this->getCountryValues(true), $this->filterCountryValues($values));
     }
-
     /**
-     * Removes all tags.
+     * Removes all countries.
      */
     public function removeAllCountryValues()
     {
         $this->_countryValues = [];
     }
-
     /**
-     * Returns a value indicating whether tags exists.
+     * Returns a value indicating whether countries exists.
      * @param string|string[] $values
      * @return boolean
      */
@@ -120,7 +112,6 @@ class CountriesBehavior extends Behavior
 
         return true;
     }
-
     /**
      * @return void
      */
@@ -143,15 +134,7 @@ class CountriesBehavior extends Behavior
         foreach ($this->_countryValues as $value) {
             /* @var ActiveRecord $tag */
             $country = $class::findOne([$this->countryValueAttribute => $value]);
-
-            if ($country === null) {
-                $country = new $class();
-                $country->setAttribute($this->countryValueAttribute, $value);
-            }
-
-            if ($country->save()) {
-                $rows[] = [$this->owner->getPrimaryKey(), $country->getPrimaryKey()];
-            }
+            $rows[] = [$this->owner->getPrimaryKey(), $country->getPrimaryKey()];
         }
 
         if (!empty($rows)) {
@@ -161,7 +144,6 @@ class CountriesBehavior extends Behavior
                 ->execute();
         }
     }
-
     /**
      * @return void
      */
@@ -170,40 +152,19 @@ class CountriesBehavior extends Behavior
         $countryRelation = $this->owner->getRelation($this->countryRelation);
         $pivot = $countryRelation->via->from[0];
 
-
-        /* @var ActiveRecord $class */
-        $class = $countryRelation->modelClass;
-
-        $pks = (new Query())
-            ->select(current($countryRelation->link))
-            ->from($pivot)
-            ->where([key($countryRelation->via->link) => $this->owner->getPrimaryKey()])
-            ->column($this->owner->getDb());
-
-//            if (!empty($pks)) {
-//                $class::updateAllCounters([$this->tagFrequencyAttribute => -1], ['in', $class::primaryKey(), $pks]);
-//            }
-
-
         $this->owner->getDb()
             ->createCommand()
             ->delete($pivot, [key($countryRelation->via->link) => $this->owner->getPrimaryKey()])
             ->execute();
     }
-
     /**
-     * Filters tags.
+     * Filters countries.
      * @param string|string[] $values
      * @return string[]
      */
     public function filterCountryValues($values)
     {
-        return array_unique(preg_split(
-            '/\s*,\s*/u',
-            preg_replace('/\s+/u', ' ', is_array($values) ? implode(',', $values) : $values),
-            -1,
-            PREG_SPLIT_NO_EMPTY
-        ));
+        return array_unique(preg_split('/\s*,\s*/u', preg_replace('/\s+/u', ' ', is_array($values) ? implode(',', $values) : $values), -1, PREG_SPLIT_NO_EMPTY));
     }
 
 }
