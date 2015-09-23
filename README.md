@@ -42,7 +42,7 @@ it will create a databases:
 	1. country - with some data (249 countries in english[name_en]) in it
 	2. post_country_assn - depends from table post and table country
 
-You can use this migartions like a example and create needed tables yourself
+You can use this migartions like an example and create needed tables yourself
 
 
 Configuring
