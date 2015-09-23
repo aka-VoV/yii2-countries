@@ -32,6 +32,10 @@ Migration
 you can use migrations that already exist in console/migartions
 
 ```
+$ yii migrate --migrationPath='@akavov/countries/console/migrations'
+```
+or
+```
 $ yii migrate --migrationPath=@vendor/akavov/yii2-countries/console/migartions
 ```
 it will create a databases:
