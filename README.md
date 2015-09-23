@@ -32,7 +32,7 @@ Migration
 you can use migrations that already exist in console/migartions
 
 ```
-$ yii migrate --migartionPath=@vendor/akavov/yii2-countries/console/migartions
+$ yii migrate --migrationPath=@vendor/akavov/yii2-countries/console/migartions
 ```
 it will create a databases:
 	1. country - with some data (249 countries in english[name_en]) in it
