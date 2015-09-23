@@ -6,6 +6,7 @@ ISO 3166-1 numeric code, ISO 3166-1 alpha-2 code, ITU-T calling code and name (E
 
 https://github.com/victordzmr/Countries
 https://github.com/lipis/flag-icon-css
+https://github.com/2amigos/yii2-selectize-widget
 
 
 Installation
