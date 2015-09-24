@@ -36,9 +36,9 @@ $ yii migrate --migrationPath='@akavov/countries/console/migrations'
 ```
 or
 ```
-$ yii migrate --migrationPath=@vendor/akavov/yii2-countries/console/migartions
+$ yii migrate --migrationPath=@vendor/akavov/yii2-countries/console/migrations
 ```
-it will create a databases:
+it will create tables:
 	1. country - with some data (249 countries in english[name_en]) in it
 	2. post_country_assn - depends from table post and table country
 
