@@ -134,6 +134,9 @@ class CountriesBehavior extends Behavior
         foreach ($this->_countryValues as $value) {
             /* @var ActiveRecord $tag */
             $country = $class::findOne([$this->countryValueAttribute => $value]);
+            if($country == null){
+                $country = $class::findOne([$this->countryFlagAttribute => $value]);
+            }
             $rows[] = [$this->owner->getPrimaryKey(), $country->getPrimaryKey()];
         }
 
