@@ -27,7 +27,7 @@ class CountriesAsset extends AssetBundle
      * @inheritdoc
      */
     public function init() {
-        $this->sourcePath = "@vendor/bower/flag-icon-css";
+        $this->sourcePath = "@bower/flag-icon-css";
         parent::init();
     }
 }
